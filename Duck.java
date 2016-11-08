@@ -17,7 +17,7 @@ public class Duck extends Actor
     int animCounter=0;
     int flooredge=58;
     List springs;
-
+    int iThrow=0;
     double x1,y1,x2=0,y2=0,r1,r2;
     int p=0;
     int[] points = new int[4];
@@ -36,7 +36,7 @@ public class Duck extends Actor
             dl[f] = Math.sqrt(Math.pow((x[conect1[f]] - x[conect2[f]]),2)+Math.pow((y[conect1[f]] - y[conect2[f]]),2));
         }
         //getImage().setTransparency(20);
-        
+
         anim1 = new GreenfootImage("RubberDuck1.png");
         anim2= new GreenfootImage("RubberDuck2.png");
         anim1.scale(anim1.getWidth() - 128, anim1.getHeight() - 128);
@@ -84,19 +84,8 @@ public class Duck extends Actor
     public void act() 
     {
         //if(stick)return;
-        if(animCounter==600){
-        
-            if (animNow == false){
-            setImage(anim2);
-            animCounter=0;
-            animNow=true;
-            }
-            else{
-            setImage(anim1);
-            animCounter=0;
-            animNow=false;
-            }
-        }
+        animation();
+        ThrowArea();
         pointer=0;
         for(int i=0;i<springs.size();i++){
             if((Duck)springs.get(i) != this){
@@ -107,6 +96,45 @@ public class Duck extends Actor
         }
         animCounter++;
     }    
+
+    public void ThrowArea(){
+        ThrowArea tArea = (ThrowArea)getOneIntersectingObject(ThrowArea.class);
+        if(tArea==null&& Greenfoot.mouseDragged(this)){
+            ((myWorld)getWorld()).dieDuck();
+            
+        }
+    }
+
+    public boolean isThrowing(){
+        
+        if (Greenfoot.mousePressed(this)){
+            iThrow=1;
+            return true;
+        }
+        if (iThrow==1){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    public void animation(){
+        if(animCounter==600){
+
+            if (animNow == false){
+                setImage(anim2);
+                animCounter=0;
+                animNow=true;
+            }
+            else{
+                setImage(anim1);
+                animCounter=0;
+                animNow=false;
+            }
+        }
+    }
     //*****************************************************************************
     public boolean collision(Duck s,boolean record){
         boolean in = false;
@@ -172,7 +200,6 @@ public class Duck extends Actor
             normals[i] = normals[i].getUnitVector();
         }
 
-        //pause();
         double[] biasA = new double[pointer];
         double[] biasB = new double[pointer];
         double dist;
@@ -264,16 +291,7 @@ public class Duck extends Actor
             System.out.println("overload!!");
         return n;
     }
-    //******************************************************************************   
-    public void pause(){
-        for(int f=0;f<6;f++){
-            world.drawLine((int)(x[conect1[f]]),(int)(y[conect1[f]]),(int)(x[conect2[f]]),(int)(y[conect2[f]]));
-        }
-        //world.repaint();
-        //while(Greenfoot.isKeyDown("p")){}
-        while(!Greenfoot.isKeyDown("p")){}
 
-    }
     //******************************************************************************   
     public void step(double time, int dir){
         for(int i=0;i<4;i++){
@@ -309,7 +327,8 @@ public class Duck extends Actor
             drag = true;
         if(Greenfoot.mouseClicked(null) || Greenfoot.isKeyDown("q"))
             drag = false;
-        MouseInfo mouse = Greenfoot.getMouseInfo();
+            
+         MouseInfo mouse = Greenfoot.getMouseInfo();
         if(mouse != null){
             mx = mouse.getX();
             my = mouse.getY();
@@ -352,11 +371,9 @@ public class Duck extends Actor
                 yv[conect2[f]] = yv[conect2[f]] - l*Math.sin(ang);
             }
 
-        
             for(int f=0;f<4;f++){
                 xv[f] = .9999*xv[f];
                 yv[f] = .9999*yv[f];
-
                 x[f] = x[f] + xv[f];
                 y[f] = y[f] + yv[f];
                 if(y[f]>getWorld().getHeight()-flooredge){

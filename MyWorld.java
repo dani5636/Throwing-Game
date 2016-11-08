@@ -5,19 +5,23 @@ import java.util.ArrayList;
 
 public class myWorld  extends World
 {
-    ArrayList<Duck> duckies = new ArrayList<>();
+    ArrayList<Bubble> bubbles = new ArrayList<>();
     int speed = 130;
     int framerate = 60;
-    int spawnrate=0;
+    int spawnrate=320;
     int lastSpawn=1;
+    Duck myDuck = new Duck();
     public myWorld()
     {    
         // Create a new world with 20x20 cells with a cell size of 10x10 pixels.
         super(1500,800,1); 
         setBackground(new GreenfootImage("BG.png"));
-        addObject(new Duck(),100,475);
+        addObject(new ThrowArea(), 233, 371);
+
+        addObject(myDuck,123,371);
+
         for(int i=0; i<30; i++){
-            duckies.add(i, new Duck());
+            bubbles.add(i, new Bubble());
         }
 
         //addObject(new duck(true),275,250);
@@ -27,42 +31,51 @@ public class myWorld  extends World
     }
 
     public void act(){
-        String str = Greenfoot.getKey();
-        if(str!=null && str.equals("f")){
-            framerate += 10;
-            if(framerate>50)framerate=30;
-            Greenfoot.setSpeed(framerate);
-        }
-        if(str!=null && str.equals("s")){
-            speed += 60;
-            if(speed>130)speed=10;
-        }
-        spawning();
+        //spawning();
         setBackground(new GreenfootImage("BG.png"));
-        getBackground().setColor(Color.red);
+        getBackground().setColor(Color.green);
+        spawning();
         List duckes = getObjects(Duck.class);
         for(int j=0;j<speed;j++){
-            for(int i=0;i<duckes.size();i++){
-                ((Duck)duckes.get(i)).simulate(1);
-            }
-            for(int i=0;i<duckes.size();i++){
-                ((Duck)duckes.get(i)).act();
-            }
+            myDuck.simulate(1);
+            myDuck.act();
         }
-        //System.out.println("move");
+        /*if(duckes.size()>0){
+        for(int j=0;j<speed;j++){
+        for(int i=0;i<duckes.size();i++){
+        ((Duck)duckes.get(i)).simulate(1);
+        }
+        for(int i=0;i<duckes.size();i++){
+        ((Duck)duckes.get(i)).act();
+        }
+        }
+        }*/
     }
 
     public void drawLine(int a,int b,int c,int d){
         getBackground().drawLine(a,b,c,d);
     }
 
+    public void ThrowArea(){
+        GreenfootImage area = new GreenfootImage("TArea.png");
+
+    }
+    //does a spawn of ducks
     public void spawning(){
-        if(spawnrate==500){
-            addObject(duckies.get(duckies.size()-lastSpawn),500,500);
-            spawnrate=0;
-            lastSpawn++;
+        if(spawnrate==400){
+            if(lastSpawn<bubbles.size()){
+                addObject(bubbles.get(bubbles.size()-lastSpawn),1431,700);
+                spawnrate=0;
+                lastSpawn++;
+            }
         }
         spawnrate++;
 
+    }
+
+    public void dieDuck(){
+        removeObject(myDuck);
+        myDuck = new Duck();
+        addObject(myDuck,233,371);
     }
 }
