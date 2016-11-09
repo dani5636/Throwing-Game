@@ -1,8 +1,7 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-import greenfoot.*;
-import java.util.Random;
 /**
- * Write a description of class Ballon here.
+ * Write a description of class bubbles here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -10,35 +9,48 @@ import java.util.Random;
 public class Bubble extends Target
 {
     private int speed= 1;
-    private int x, y;
-    private int rwind=1;
+    private int y;
+    /**
+     * Act - do whatever the bubbles wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     public Bubble()
-    {
-        x = 1400;
-        y = 700;
-        this.setLocation(x, y);
-    }
-
-    public void act(){
-        super.act();
-        move();
+    {  
+        createImage();
         
-
     }
-    public void move()
+
+    public void act()
     {
-        Random rand = new Random();
-        y=y-speed;
+        y=getY();
+        y = y-1;
+        setLocation(getX(),y);
+        removeThisBubble();
+       
+    }  
 
-        if(5 > Greenfoot.getRandomNumber(100)+1)
+    public boolean isTouchingCeiling()
+    {
+        return (getY() <= 10);
+    }
+
+    private void createImage()
+    {
+        setImage("transparent-bubble.png");
+        int percentage = 15;
+        GreenfootImage image = getImage();
+        image.scale(image.getWidth()*percentage/100,image.getHeight()*percentage/100);
+
+    }
+
+    private void removeThisBubble()
+    {
+        if(isTouchingCeiling())
         {
-            rwind=-rwind;
-        }
-        x=x+rwind;
-        this.setLocation(x,y);
-        if( y <=-5){
-        getWorld().removeObject(this);
+            getWorld().removeObject(this);
         }
     }
 
+    
 }
+
