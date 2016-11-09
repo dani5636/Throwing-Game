@@ -1,10 +1,14 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
-import java.awt.Color;
 import java.util.ArrayList;
-
-public class myWorld  extends World
+/**
+ * Write a description of class MyWorld here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class MyWorld extends World
 {
+<<<<<<< Updated upstream
     ArrayList<Bubble> bubbles = new ArrayList<>();
     int speed = 130;
     int framerate = 60;
@@ -23,13 +27,22 @@ public class myWorld  extends World
         for(int i=0; i<30; i++){
             bubbles.add(i, new Bubble());
         }
+=======
+    ArrayList<bubbles> bubble = new ArrayList<>();
+    int spawnrate;
+>>>>>>> Stashed changes
 
-        //addObject(new duck(true),275,250);
-        //addObject(new spring(200,0,-.1,0),250,250);
-        //Greenfoot.start();
+    /**
+     * Constructor for objects of class MyWorld.
+     * 
+     */
+    public MyWorld()
+    {    
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(600, 600, 1); 
+        populate();
 
-    }
-
+<<<<<<< Updated upstream
     public void act(){
         //spawning();
         setBackground(new GreenfootImage("BG.png"));
@@ -50,12 +63,17 @@ public class myWorld  extends World
         }
         }
         }*/
+=======
+        
+>>>>>>> Stashed changes
+    }
+    public void populate()
+    {
+        addObject(new bubbles(), 550,550);
+
     }
 
-    public void drawLine(int a,int b,int c,int d){
-        getBackground().drawLine(a,b,c,d);
-    }
-
+<<<<<<< Updated upstream
     public void ThrowArea(){
         GreenfootImage area = new GreenfootImage("TArea.png");
 
@@ -68,14 +86,26 @@ public class myWorld  extends World
                 spawnrate=0;
                 lastSpawn++;
             }
+=======
+    public void spawning()
+    {
+        for( int i = 0; i < bubble.size(); i++)
+        {
+            spawnrate = 500;
+            bubble.add(i, new bubbles());
+>>>>>>> Stashed changes
         }
-        spawnrate++;
+        
 
     }
 
+<<<<<<< Updated upstream
     public void dieDuck(){
         removeObject(myDuck);
         myDuck = new Duck();
         addObject(myDuck,233,371);
     }
+=======
+    
+>>>>>>> Stashed changes
 }

@@ -1,8 +1,11 @@
 #BlueJ class context
-comment0.target=myWorld
+comment0.target=MyWorld
+comment0.text=\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
-comment1.target=myWorld()
+comment1.target=MyWorld()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ MyWorld.\n\ \n
 comment2.params=
+<<<<<<< Updated upstream
 comment2.target=void\ act()
 comment3.params=a\ b\ c\ d
 comment3.target=void\ drawLine(int,\ int,\ int,\ int)
@@ -13,3 +16,9 @@ comment5.target=void\ spawning()
 comment6.params=
 comment6.target=void\ dieDuck()
 numComments=7
+=======
+comment2.target=void\ populate()
+comment3.params=
+comment3.target=void\ spawning()
+numComments=4
+>>>>>>> Stashed changes

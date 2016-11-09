@@ -25,7 +25,7 @@ public class Duck extends Actor
     boolean drag=false;
     boolean stick=false;
     int mx,my;
-    myWorld world;
+    MyWorld world;
     boolean animNow= false;
     int type=1;
     GreenfootImage anim1, anim2;
@@ -60,7 +60,7 @@ public class Duck extends Actor
     }
 
     protected void addedToWorld(World w){
-        world = (myWorld)w;
+        world = (MyWorld)w;
         for(int i=0;i<x.length;i++){
             x[i] += getX();
             y[i] += getY();
