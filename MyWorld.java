@@ -5,23 +5,22 @@ import java.util.ArrayList;
 
 public class MyWorld  extends World
 {
-    private static GameState GSTATE = new GameState();
+    private GameState gState = new GameState();
     private ArrayList<Bubble> bubbles = new ArrayList<>();
     private int speed = 130;
     private int framerate = 60;
-    private int spawnrate=320;
+    private int spawnrate=0;
     private int lastSpawn=1;
     private String prefix = "score: ";
     private Duck myDuck = new Duck();
-    private final static Color transparent = new Color(0,0,0,0);
-   // private static GreenfootImage BGROUND = new GreenfootImage("BG.png");
+    
     public MyWorld()
     {    
         // Create a new world with 20x20 cells with a cell size of 10x10 pixels.
         super(1500,800,1); 
         setBackground(new GreenfootImage("BG.png"));
         addObject(new ThrowArea(), 233, 371);
-        
+        addObject(new ScoreBoard(), 233,100);
         addObject(myDuck,233,371);
 
         for(int i=0; i<30; i++){
@@ -33,11 +32,11 @@ public class MyWorld  extends World
         //Greenfoot.start();
 
     }
-
+    //acts
     public void act(){
         spawning();
-        updateImage();
-        List duckes = getObjects(Duck.class);
+        setBackground("BG.png");
+        //The duck's speed in the game
         for(int j=0;j<speed;j++){
             myDuck.simulate(1);
             myDuck.act();
@@ -54,18 +53,15 @@ public class MyWorld  extends World
         }
         }*/
     }
-
+    //receives information from the duck to draw a line between it and the mouse.
     public void drawLine(int a,int b,int c,int d){
         getBackground().drawLine(a,b,c,d);
     }
 
-    public void ThrowArea(){
-        GreenfootImage area = new GreenfootImage("TArea.png");
-
-    }
-    //does a spawn of ducks
+    
+    //spawns the bubbles
     public void spawning(){
-        if(spawnrate==400){
+        if(spawnrate==200){
             if(lastSpawn<bubbles.size()){
                 addObject(bubbles.get(bubbles.size()-lastSpawn),1431,700);
                 spawnrate=0;
@@ -75,18 +71,15 @@ public class MyWorld  extends World
         spawnrate++;
 
     }
-
+    // Replaces current duck with a new duck.
     public void dieDuck(){
         removeObject(myDuck);
         myDuck = new Duck();
         addObject(myDuck,233,371);
     }
-    private void updateImage()
-    {
-        setBackground(new GreenfootImage("BG.png"));
-        
-        GreenfootImage text = new GreenfootImage(prefix + ": " + GSTATE.getScore(), 22, Color.BLACK, transparent);
-        getBackground().drawImage(text , 500, 500);
-        getBackground().setColor(Color.green);
+    
+    //returns GameState
+    public GameState getGameState(){
+    return gState;
     }
 }
