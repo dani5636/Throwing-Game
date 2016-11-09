@@ -7,7 +7,7 @@ import java.util.Random;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Bubble extends Actor
+public class Bubble extends Target
 {
     private int speed= 1;
     private int x, y;
@@ -18,18 +18,27 @@ public class Bubble extends Actor
         y = 700;
         this.setLocation(x, y);
     }
+
     public void act(){
-     Random rand = new Random();
-     y=y-speed;
-     
-     if(5 > Greenfoot.getRandomNumber(100)+1)
-     {
-      rwind=-rwind;
-      }
-     x=x+rwind;
-     this.setLocation(x,y);
-     
-     
+        super.act();
+        move();
+        
+
     }
-   
+    public void move()
+    {
+        Random rand = new Random();
+        y=y-speed;
+
+        if(5 > Greenfoot.getRandomNumber(100)+1)
+        {
+            rwind=-rwind;
+        }
+        x=x+rwind;
+        this.setLocation(x,y);
+        if( y <=-5){
+        getWorld().removeObject(this);
+        }
+    }
+
 }

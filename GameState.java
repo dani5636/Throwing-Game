@@ -19,6 +19,7 @@ public class GameState
 
     public int getScore(){
         return score;
+        
     }
 
     public void setScore(int i){

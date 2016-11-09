@@ -1,7 +1,7 @@
 #BlueJ class context
-comment0.target=myWorld
+comment0.target=MyWorld
 comment1.params=
-comment1.target=myWorld()
+comment1.target=MyWorld()
 comment2.params=
 comment2.target=void\ act()
 comment3.params=a\ b\ c\ d
@@ -12,4 +12,6 @@ comment5.params=
 comment5.target=void\ spawning()
 comment6.params=
 comment6.target=void\ dieDuck()
-numComments=7
+comment7.params=
+comment7.target=void\ updateImage()
+numComments=8

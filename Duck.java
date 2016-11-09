@@ -25,7 +25,7 @@ public class Duck extends Actor
     boolean drag=false;
     boolean stick=false;
     int mx,my;
-    myWorld world;
+    MyWorld world;
     boolean animNow= false;
     int type=1;
     GreenfootImage anim1, anim2;
@@ -60,7 +60,7 @@ public class Duck extends Actor
     }
 
     protected void addedToWorld(World w){
-        world = (myWorld)w;
+        world = (MyWorld)w;
         for(int i=0;i<x.length;i++){
             x[i] += getX();
             y[i] += getY();
@@ -85,7 +85,7 @@ public class Duck extends Actor
     {
         //if(stick)return;
         animation();
-        ThrowArea();
+        checkDeath();
         pointer=0;
         for(int i=0;i<springs.size();i++){
             if((Duck)springs.get(i) != this){
@@ -97,29 +97,26 @@ public class Duck extends Actor
         animCounter++;
     }    
 
-    public void ThrowArea(){
+    public void checkDeath(){
         ThrowArea tArea = (ThrowArea)getOneIntersectingObject(ThrowArea.class);
         if(tArea==null&& Greenfoot.mouseDragged(this)){
-            ((myWorld)getWorld()).dieDuck();
+            ((MyWorld)getWorld()).dieDuck();
             
         }
+        else if(hasThrown()== 1 && getY()>=getWorld().getHeight()-(flooredge+35)){
+            ((MyWorld)getWorld()).dieDuck();
+        }
     }
 
-    public boolean isThrowing(){
+    public int hasThrown(){
         
-        if (Greenfoot.mousePressed(this)){
+        if (Greenfoot.mouseDragEnded(this)){
             iThrow=1;
-            return true;
+            flooredge=40;
         }
-        if (iThrow==1){
-            return true;
-        }
-        else {
-            return false;
-        }
-
+        return iThrow;
     }
-
+    
     public void animation(){
         if(animCounter==600){
 

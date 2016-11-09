@@ -3,22 +3,26 @@ import java.util.List;
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class myWorld  extends World
+public class MyWorld  extends World
 {
-    ArrayList<Bubble> bubbles = new ArrayList<>();
-    int speed = 130;
-    int framerate = 60;
-    int spawnrate=320;
-    int lastSpawn=1;
-    Duck myDuck = new Duck();
-    public myWorld()
+    private static GameState GSTATE = new GameState();
+    private ArrayList<Bubble> bubbles = new ArrayList<>();
+    private int speed = 130;
+    private int framerate = 60;
+    private int spawnrate=320;
+    private int lastSpawn=1;
+    private String prefix = "score: ";
+    private Duck myDuck = new Duck();
+    private final static Color transparent = new Color(0,0,0,0);
+   // private static GreenfootImage BGROUND = new GreenfootImage("BG.png");
+    public MyWorld()
     {    
         // Create a new world with 20x20 cells with a cell size of 10x10 pixels.
         super(1500,800,1); 
         setBackground(new GreenfootImage("BG.png"));
         addObject(new ThrowArea(), 233, 371);
-
-        addObject(myDuck,123,371);
+        
+        addObject(myDuck,233,371);
 
         for(int i=0; i<30; i++){
             bubbles.add(i, new Bubble());
@@ -31,15 +35,14 @@ public class myWorld  extends World
     }
 
     public void act(){
-        //spawning();
-        setBackground(new GreenfootImage("BG.png"));
-        getBackground().setColor(Color.green);
         spawning();
+        updateImage();
         List duckes = getObjects(Duck.class);
         for(int j=0;j<speed;j++){
             myDuck.simulate(1);
             myDuck.act();
         }
+        
         /*if(duckes.size()>0){
         for(int j=0;j<speed;j++){
         for(int i=0;i<duckes.size();i++){
@@ -77,5 +80,13 @@ public class myWorld  extends World
         removeObject(myDuck);
         myDuck = new Duck();
         addObject(myDuck,233,371);
+    }
+    private void updateImage()
+    {
+        setBackground(new GreenfootImage("BG.png"));
+        
+        GreenfootImage text = new GreenfootImage(prefix + ": " + GSTATE.getScore(), 22, Color.BLACK, transparent);
+        getBackground().drawImage(text , 500, 500);
+        getBackground().setColor(Color.green);
     }
 }
