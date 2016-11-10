@@ -7,8 +7,9 @@ public class LevelInfo
     protected LevelInfo()
     {
         cLevel=0;
-        levelInfo.add(new Level(new Bubble(), 30, 1450, 675, 3, 5, "BG.png"));
-        levelInfo.add(new Level(new Bubble(), 30, 1450, 675, 3, 5, "BG2.png"));
+        levelInfo.add(new Level(new Bubble(), 30, 1450, 675, 3, 5, "BG.png", "Background.mp3"));
+        levelInfo.add(new Level(new Balloon(), 25, 1450, 675, 4, 7, "BG2.png", "Background.mp3"));
+        levelInfo.add(new Level(new Balloon(), 25, 1450, 675, 6, 10, "BG.png", "Background.mp3"));
     }
 
     public static LevelInfo getLevelInfo(){
@@ -27,7 +28,7 @@ public class LevelInfo
         }
     }
 
-    public void getNextLevel(){
+    public void setNextLevel(){
         if(cLevel+1<(levelInfo.size())){
             cLevel++;
         }

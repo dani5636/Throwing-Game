@@ -15,12 +15,12 @@ public class Level {
     private int scoreGoal;
     private int maxLife;
     private String bGround;
-    
+    private String bMusic;
     /**
      * Constructor for objects of class level
      */
    
-    public Level(Target t, int numberOfTargets, int targetX, int targetY, int scoreGoal, int maxLife, String bGround) {
+    public Level(Target t, int numberOfTargets, int targetX, int targetY, int scoreGoal, int maxLife, String bGround, String bMusic) {
         this.t = t;
         this.numberOfTargets = numberOfTargets;
         this.targetX = targetX;
@@ -28,6 +28,7 @@ public class Level {
         this.scoreGoal = scoreGoal;
         this.maxLife = maxLife;
         this.bGround = bGround;
+        this.bMusic = bMusic;
     }
 
     //setters for everything

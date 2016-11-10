@@ -17,7 +17,7 @@ public class Bubble extends Target
     public Bubble()
     {  
         createImage();
-        super.setHitSound("bubblesound.wav"));
+        super.setHitSound("BubbleSound.mp3");
     }
 
     public void act()

@@ -1,10 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 import java.util.List;
+ 
 
 public class Duck extends Actor
 {
     double[] x = {-25,25,25,-25};
+    boolean canPlay;
+    boolean canPlay2;
     double[] y = {-25,-25,25,25};
     double[] xprev = new double[4];
     double[] yprev = new double[4];
@@ -31,12 +34,12 @@ public class Duck extends Actor
     GreenfootImage anim1, anim2;
     int point1,point2;
 
+    
+    
     public Duck(){
         for(int f=0;f<6;f++){
             dl[f] = Math.sqrt(Math.pow((x[conect1[f]] - x[conect2[f]]),2)+Math.pow((y[conect1[f]] - y[conect2[f]]),2));
-        }
-        //getImage().setTransparency(20);
-
+        } 
         anim1 = new GreenfootImage("RubberDuck1.png");
         anim2= new GreenfootImage("RubberDuck2.png");
         anim1.scale(anim1.getWidth() - 128, anim1.getHeight() - 128);
@@ -46,9 +49,11 @@ public class Duck extends Actor
         anim1.mirrorHorizontally();
         anim2.mirrorHorizontally();
         setImage(anim1);
+        canPlay2 = true;
+        canPlay = true;
     }
 
-    public Duck(boolean s){
+   /* public Duck(boolean s){
         for(int f=0;f<6;f++){
             dl[f] = Math.sqrt(Math.pow((x[conect1[f]] - x[conect2[f]]),2)+Math.pow((y[conect1[f]] - y[conect2[f]]),2));
         }
@@ -57,7 +62,7 @@ public class Duck extends Actor
         anim1.scale(anim1.getWidth() - 128, anim1.getHeight() - 128);
         anim2.scale(anim2.getWidth() - 128, anim2.getHeight() - 128);
         setImage(anim1);
-    }
+    }*/
 
     protected void addedToWorld(World w){
         world = (MyWorld)w;
@@ -85,6 +90,7 @@ public class Duck extends Actor
     {
         //if(stick)return;
         animation();
+        checkThrown();
         checkDeath();
         pointer=0;
         for(int i=0;i<springs.size();i++){
@@ -107,14 +113,27 @@ public class Duck extends Actor
             ((MyWorld)getWorld()).dieDuck();
         }
     }
+    
+    private void checkThrown()
+    {
+        if (Greenfoot.mouseDragEnded(this) && canPlay2)
+        {
+            canPlay2 = false;
+            playDuckSound2();
+            
+        }
+        }
 
-    public int hasThrown(){
-        
+   public int hasThrown(){
+       
         if (Greenfoot.mouseDragEnded(this)){
             iThrow=1;
             flooredge=40;
+            
         }
-        return iThrow;
+       
+        return iThrow; 
+        
     }
     
     public void animation(){
@@ -241,27 +260,6 @@ public class Duck extends Actor
                 in = in || collision(s,false) || s.collision(this,false);
             }
         }
-
-        for(int i=0;i<pointer;i++){
-            //xv[points[i]] = 0;
-            //yv[points[i]] = 0;
-
-            /*
-            s.normal(xprev[points[i]],yprev[points[i]]);
-            x[points[i]] = xprev[points[i]];
-            y[points[i]] = yprev[points[i]];
-
-            s.x[s.point1] = s.xprev[s.point1];
-            s.y[s.point1] = s.yprev[s.point1];
-            s.x[s.point2] = s.xprev[s.point2];
-            s.y[s.point2] = s.yprev[s.point2];
-            s.xv[s.point1] = 0;
-            s.yv[s.point1] = 0;
-            s.xv[s.point2] = 0;
-            s.yv[s.point2] = 0;
-             */
-        }
-
     }
     //******************************************************************************   
     public Vector normal(double a, double b){
@@ -310,6 +308,8 @@ public class Duck extends Actor
     //******************************************************************************   
 
     public void simulate(int k){
+        
+   
         if(stick)return;
 
         for(int i=0;i<4;i++){
@@ -321,7 +321,9 @@ public class Duck extends Actor
             //world.drawLine((int)(x[conect1[f]]),(int)(y[conect1[f]]),(int)(x[conect2[f]]),(int)(y[conect2[f]]));
         }
         if(Greenfoot.mousePressed(this) || (Greenfoot.mousePressed(null) && type==3))
-            drag = true;
+            
+            drag = true;  
+            
         if(Greenfoot.mouseClicked(null) || Greenfoot.isKeyDown("q"))
             drag = false;
             
@@ -330,17 +332,27 @@ public class Duck extends Actor
             mx = mouse.getX();
             my = mouse.getY();
         }
+        
         if(drag){
             if(type!=2){
                 world.drawLine((int)x[0],(int)y[0],mx,my);
                 yv[0] += (my - y[0])/1500000.0;
                 xv[0] += (mx - x[0])/1500000.0;
+                
+                if (canPlay)
+                {
+                    playDuckSound();
+                    canPlay = false;
+                }
+                
             }else{
                 for(int f=0;f<4;f++){
                     yv[f] = (my - y[f])/500.0;
                     xv[f] = (mx - x[f])/500.0;
+                    System.out.println("else for-loop");
                 }
             }
+            
         }
 
         for(int f=0;f<4;f++){
@@ -411,4 +423,18 @@ public class Duck extends Actor
         }
 
     }
-}
+    
+    private void playDuckSound()
+    {
+            GreenfootSound RDP = new GreenfootSound("RubberDuckPressed.mp3");
+            RDP.play();
+    }
+    
+    private void playDuckSound2()
+    {
+            GreenfootSound RDR = new GreenfootSound("RubberDuckReleased.mp3");
+            RDR.play();
+    }
+    
+   }
+

@@ -16,10 +16,9 @@ public class MyWorld  extends World
     private int numberOfTargets;
     private int targetX, targetY;
     private ScoreBoard sBoard;
-
+    private GreenfootSound BM;
     public MyWorld()
     {    
-        // Create a new world with 20x20 cells with a cell size of 10x10 pixels.
         super(1500,800,1); 
         gState  = GameState.getGState(); 
         Level iLevel = LevelInfo.getLevelInfo().getCurrentLevel();
@@ -27,8 +26,13 @@ public class MyWorld  extends World
         numberOfTargets = iLevel.getNumberOfTargets();
         targetX= iLevel.getTargetX();
         targetY=iLevel.getTargetY();
+        BM = new GreenfootSound("Background.mp3");
+        BM.setVolume(30);
         setBackground(new GreenfootImage(bGround));
         sBoard = ScoreBoard.getSBoard();
+        gState.setScore(0);
+        gState.setMaxLife(iLevel.getMaxLife());
+        
         addObject(new ThrowArea(), 233, 371);
         addObject(sBoard, 233,50);
         addObject(myDuck,233,371);
@@ -45,7 +49,7 @@ public class MyWorld  extends World
     public void act(){
         spawning();
         setBackground(new GreenfootImage(bGround));
-        
+        BM.play();
         //The duck's speed in the game
         for(int j=0;j<speed;j++){
             myDuck.simulate(1);
@@ -95,10 +99,13 @@ public class MyWorld  extends World
     }
 
     public void winCheck(){
+        
+        LevelInfo iLevel = LevelInfo.getLevelInfo();
         if((gState.getScore()==gState.getScoreGoal()) || (Greenfoot.isKeyDown("e"))){
-            LevelInfo iLevel = LevelInfo.getLevelInfo();
-            iLevel.getNextLevel();
+           
+            iLevel.setNextLevel();
             if (iLevel.getCurrentLevel()!=null){
+                BM.stop();
                 MyWorld w = new MyWorld();
                 Greenfoot.setWorld(w);
             }
@@ -107,10 +114,10 @@ public class MyWorld  extends World
             }
         }
         if((Greenfoot.isKeyDown("q"))){
-            LevelInfo iLevel = LevelInfo.getLevelInfo();
             iLevel.setLastLevel();
             
             if (iLevel.getCurrentLevel()!=null){
+                BM.stop();
                 MyWorld w = new MyWorld();
                 Greenfoot.setWorld(w);
             }
