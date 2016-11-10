@@ -14,6 +14,18 @@ public class ScoreBoard extends Actor
      */
     private String prefix = "Score: ";
     private final static Color transparent = new Color(0,0,0,0);
+    private static ScoreBoard sBoard= null;
+    
+    protected ScoreBoard()
+    {
+    }
+    public static ScoreBoard getSBoard(){
+        if(sBoard==null){
+        sBoard=new ScoreBoard();
+        }
+        return sBoard;
+    }
+    
     public void act() 
     {
         updateImage();

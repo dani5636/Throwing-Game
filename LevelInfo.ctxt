@@ -2,4 +2,14 @@
 comment0.target=LevelInfo
 comment1.params=
 comment1.target=LevelInfo()
-numComments=2
+comment2.params=
+comment2.target=LevelInfo\ getLevelInfo()
+comment3.params=
+comment3.target=Level\ getCurrentLevel()
+comment4.params=
+comment4.target=void\ getNextLevel()
+comment5.params=
+comment5.target=void\ setLastLevel()
+comment6.params=
+comment6.target=void\ reset()
+numComments=7

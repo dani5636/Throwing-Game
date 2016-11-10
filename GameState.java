@@ -10,12 +10,20 @@ public class GameState
     private int time;
     private int score = 0;
     private int scoreGoal, life;
-
+    private static GameState gState = null;
     /**
      * Constructor for objects of class GameState
      */
-    public GameState()
+    protected GameState()
     {
+    }
+
+    public static GameState getGState(){
+
+        if(gState==null){
+            gState = new GameState();
+        }
+        return gState;
     }
 
     public int getScore(){
@@ -30,27 +38,33 @@ public class GameState
     public void addScore(int i){
         score = score+i;
     }
-    
+
     @Override
     public String toString(){
         return "Score: " + score + "\nLives: " + life;
     }
+
     public int getLife(){
         return life;
     }
+
     public void substractLife(){
         life--;
     }
+
     public void addLife(){
         life++;
     }
+
     public void setScoreGoal(int score){
         scoreGoal= score;
     }
+
     public int getScoreGoal()
     {
-    return scoreGoal;
+        return scoreGoal;
     }
+
     public void setMaxLife(int life){
         this.life=life;
     }

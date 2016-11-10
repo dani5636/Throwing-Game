@@ -13,6 +13,7 @@ public abstract class Target extends Actor
     private int x, y;
     private int rWind=1;
     private boolean isHit=false;
+    private String hitSound;
     public Target(){
     }
 
@@ -27,6 +28,9 @@ public abstract class Target extends Actor
     //Hit Collision
     public boolean hit(){
         Duck duck = (Duck)getOneIntersectingObject(Duck.class);
+        if(hitSound != null){
+                Greenfoot.playSound(hitSound);
+            }
         return duck!=null;
     }
     //adds point to the gamestate that is carried in the world
@@ -35,6 +39,7 @@ public abstract class Target extends Actor
         if(!isHit){
             gState.addScore(1);
             isHit=true;
+            
         }
         System.out.println("it works!" + gState.getScore());
         getImage().setTransparency(0);
@@ -50,4 +55,10 @@ public abstract class Target extends Actor
 
         this.setLocation(getX()+rWind, getY()-speed);
     }
+
+    public void setHitSound(String s){
+
+        hitSound = s;
+    }
+
 }

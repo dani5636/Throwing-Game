@@ -11,4 +11,6 @@ comment4.params=
 comment4.target=void\ point()
 comment5.params=
 comment5.target=void\ move()
-numComments=6
+comment6.params=s
+comment6.target=void\ setHitSound(java.lang.String)
+numComments=7
