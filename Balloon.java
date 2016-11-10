@@ -9,7 +9,9 @@ import java.util.Random;
  */
 public class Balloon extends Target
 {
-    
+    private int speed= 1;
+    private int x, y;
+    private int rwind=1;
     public Balloon()
     {
         createImage();
@@ -17,8 +19,24 @@ public class Balloon extends Target
 
     public void act(){
         super.act();
+        move();
+        
+
     }
-    
+    public void move()
+    {
+        Random rand = new Random();
+        y=getY();
+        y=y-speed;
+        x=getX();
+        if(5 > Greenfoot.getRandomNumber(100)+1)
+        {
+            rwind=-rwind;
+        }
+        x=x+rwind;
+        this.setLocation(x,y);
+        
+    }
     private void removeThisBubble()
     {
         if(isTouchingCeiling())

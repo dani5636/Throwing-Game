@@ -22,15 +22,11 @@ public class ScoreBoard extends Actor
     {
         GameState gState = ((MyWorld)getWorld()).getGameState();
         GreenfootImage image = new GreenfootImage(20, 20);
-        GreenfootImage text = new GreenfootImage(gState.toString(), 32, Color.BLACK, transparent);
+        GreenfootImage text = new GreenfootImage(prefix + ": " + gState.getScore(), 32, Color.BLACK, transparent);
         
         if (text.getWidth() > image.getWidth() - 20)
         {
             image.scale(text.getWidth() + 20, image.getHeight());
-        }
-        if (text.getHeight() > image.getHeight() - 20)
-        {
-            image.scale(text.getWidth(), image.getHeight()+80);
         }
         
         image.drawImage(text,(image.getWidth()-text.getWidth())/2,(image.getHeight()-text.getHeight())/2);
