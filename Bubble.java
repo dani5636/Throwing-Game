@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Bubble extends Target
 {
     private int speed= 1;
-    private int y;
+
     /**
      * Act - do whatever the bubbles wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -17,18 +17,14 @@ public class Bubble extends Target
     public Bubble()
     {  
         createImage();
-        
     }
 
     public void act()
     {
-        y=getY();
-        y = y-1;
-        setLocation(getX(),y);
+        setLocation(getX(),getY()-speed);
+        super.act();
         removeThisBubble();
-       
     }  
-
     public boolean isTouchingCeiling()
     {
         return (getY() <= 10);
@@ -51,6 +47,4 @@ public class Bubble extends Target
         }
     }
 
-    
 }
-
